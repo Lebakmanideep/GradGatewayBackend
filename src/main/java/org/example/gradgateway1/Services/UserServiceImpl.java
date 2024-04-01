@@ -4,6 +4,7 @@ import org.example.gradgateway1.DAO.UserRepository;
 import org.example.gradgateway1.DTO.UserRegisterDTO;
 import org.example.gradgateway1.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,11 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository , PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -24,7 +27,7 @@ public class UserServiceImpl implements UserService{
                 .firstName(userRegisterDTO.getFirstName())
                 .lastName(userRegisterDTO.getLastName())
                 .email(userRegisterDTO.getEmail())
-                .password(userRegisterDTO.getPassword())
+                .password(passwordEncoder.encode(userRegisterDTO.getPassword()))
                 .role(userRegisterDTO.getRole())
                 .build();
         userRepository.save(user);
@@ -46,5 +49,10 @@ public class UserServiceImpl implements UserService{
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
 
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

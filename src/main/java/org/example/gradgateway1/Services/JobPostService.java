@@ -3,6 +3,7 @@ package org.example.gradgateway1.Services;
 import org.example.gradgateway1.DTO.JobPostDTO;
 import org.example.gradgateway1.Entity.JobPost;
 
+import java.util.Date;
 import java.util.List;
 
 public interface JobPostService {
@@ -23,7 +24,7 @@ public interface JobPostService {
 
     List<JobPost> getJobByVisaSponsorship(Boolean visa);
 
-    List<JobPost> getJobByPostedDate(String date);
+    List<JobPost> getJobByPostedDate(Date date);
 
     List<JobPost> getJobByCompany(String company);
 

@@ -19,19 +19,19 @@ public class SecurityConfig {
     SecurityFilterChain customSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers(HttpMethod.GET, "/api/company/**","/api/review/**","/api/review/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/company/**","/api/review/**","/api/jobPost/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/company/**","/api/jobPost/**").hasAnyAuthority("EMPLOYER","ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/company/**","/api/jobPost/**").hasAnyAuthority("EMPLOYER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/company/","/api/jobPost/**").hasAnyAuthority("EMPLOYER","ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/review/**").hasAnyAuthority("USER","ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/review/**").hasAnyAuthority("USER","ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/review/**").hasAnyAuthority("USER","ADMIN")
-                        .requestMatchers("/api/auth/register").permitAll()
-                        .requestMatchers("/api/auth/all").hasAuthority("ADMIN")
-                        .requestMatchers("/api/auth/delete").hasAuthority("ADMIN")
-                                .requestMatchers("/api/auth/user/**").authenticated()
-                                .requestMatchers("/api/auth/userdata/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/auth/user/**").hasAuthority("ADMIN"))
+                        .requestMatchers("/api/user/register").permitAll()
+                        .requestMatchers("/api/user/all").hasAuthority("ADMIN")
+                        .requestMatchers("/api/user/delete").hasAuthority("ADMIN")
+                        .requestMatchers("/api/userdata/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/userdata/**").hasAuthority("ADMIN")
+                        .anyRequest().permitAll())
         .formLogin(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(Customizer.withDefaults());
