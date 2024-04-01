@@ -7,6 +7,8 @@ import org.example.gradgateway1.Services.JobPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/api/jobpost")
 public class JobPostRestController {
@@ -71,7 +73,7 @@ public class JobPostRestController {
     }
 
     @GetMapping("/jobpost/posteddate/{date}")
-    public String getJobPostByPostedDate(@PathVariable String date) {
+    public String getJobPostByPostedDate(@PathVariable Date date) {
         return jobPostService.getJobByPostedDate(date).toString();
     }
 
